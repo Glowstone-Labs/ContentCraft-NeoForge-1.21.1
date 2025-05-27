@@ -15,7 +15,7 @@ build/
 */build/
 */.gradle/
 .gradletasknamecache
-!gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.jar
 
 # Eclipse
 **/bin/
@@ -57,3 +57,4 @@ changelog.txt
 .directory
 Thumbs.db
 *.stackdump
+gradle/wrapper/gradle-wrapper.properties
