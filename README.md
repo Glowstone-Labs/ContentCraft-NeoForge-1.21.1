@@ -4,7 +4,7 @@
 
 ###### Minecraft NeoForge Mod **By Glowstone Labs**
 
-###### Mod-Version:`n/a`
+###### Mod-Version:`2.0.0`
 
 ###### Mc-Version:`1.21.1`
 
