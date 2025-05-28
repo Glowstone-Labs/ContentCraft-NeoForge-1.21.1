@@ -21,7 +21,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
-import xyz.glowstonelabs.contentcraft.ContentCraft;
+import xyz.glowstonelabs.contentcraft.block.ModBlocks;
 
 import java.util.Set;
 
@@ -58,7 +58,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
      */
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
-        return ContentCraft.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return ModBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
     }
 
     /**

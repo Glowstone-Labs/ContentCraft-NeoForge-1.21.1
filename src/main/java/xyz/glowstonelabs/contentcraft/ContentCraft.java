@@ -30,6 +30,8 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+import xyz.glowstonelabs.contentcraft.block.ModBlocks;
+import xyz.glowstonelabs.contentcraft.item.ModItems;
 
 
 /**
@@ -48,16 +50,6 @@ public class ContentCraft
      * Central logger for the mod
      */
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    /**
-     * Registry for mod blocks
-     */
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
-
-    /**
-     * Registry for mod items
-     */
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
 
     /**
      * Registry for creative mode tabs
@@ -80,9 +72,9 @@ public class ContentCraft
         modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
+        ModBlocks.init(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
+        ModItems.init(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
