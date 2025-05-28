@@ -8,13 +8,6 @@ package xyz.glowstonelabs.contentcraft;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,11 +18,12 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+import xyz.glowstonelabs.contentcraft.block.ModBlocks;
+import xyz.glowstonelabs.contentcraft.item.ModItems;
+import xyz.glowstonelabs.contentcraft.utils.ModCreativeModeTabs;
+import xyz.glowstonelabs.contentcraft.utils.VanillaCreativeModeTabs;
 
 
 /**
@@ -49,47 +43,19 @@ public class ContentCraft
      */
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    /**
-     * Registry for mod blocks
-     */
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
-
-    /**
-     * Registry for mod items
-     */
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
-
-    /**
-     * Registry for creative mode tabs
-     */
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-
-    /** Creative tab for mod blocks and items */
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BLOCKS_TAB = CREATIVE_MODE_TABS.register(
-            "block_creative_tab",
-            () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.contentCraft.blocks"))
-                    .withTabsBefore(CreativeModeTabs.COMBAT)
-                    .icon(Items.DIAMOND_SWORD::getDefaultInstance)
-                    .displayItems((parameters, output) -> output.accept(Items.DIAMOND_SWORD)).build()
-    );
-
     // Entry point for the mod. Called by NeoForge during mod loading.
     public ContentCraft(IEventBus modEventBus, ModContainer modContainer)
     {
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
-        CREATIVE_MODE_TABS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
+        ModCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(VanillaCreativeModeTabs::registerCreativeModeTabs);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -100,25 +66,14 @@ public class ContentCraft
      * @param event The common setup event
      */
     private void commonSetup(final FMLCommonSetupEvent event) {
-        if (Config.logDirtBlock) {
-            LOGGER.info("Registered blocks: {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-        }
-    }
 
-    // Add items to vanilla creative tabs
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        //Register to vanilla creative tabs example
-//        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-//            event.accept(EXAMPLE_BLOCK_ITEM);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
+        LOGGER.info("ContentCraft server starting...");
     }
 
     /**
@@ -128,7 +83,8 @@ public class ContentCraft
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            LOGGER.info("Initializing client for player: {}", Minecraft.getInstance().getUser().getName());
+            LOGGER.info("Initializing ContentCraft" +
+                    " client for player: {}", Minecraft.getInstance().getUser().getName());
         }
     }
 }
