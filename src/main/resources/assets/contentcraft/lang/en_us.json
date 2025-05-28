@@ -1,5 +1,3 @@
 {
-  "itemGroup.contentcraft": "Example Mod Tab",
-  "block.contentcraft.example_block": "Example Block",
-  "item.contentcraft.example_item": "Example Item"
+  "itemGroup.contentCraft.blocks": "ContentCraft Blocks"
 }
