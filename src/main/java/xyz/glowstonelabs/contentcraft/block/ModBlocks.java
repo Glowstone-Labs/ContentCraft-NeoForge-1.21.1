@@ -6,7 +6,6 @@
  */
 package xyz.glowstonelabs.contentcraft.block;
 
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import xyz.glowstonelabs.contentcraft.ContentCraft;
 
@@ -16,8 +15,4 @@ import xyz.glowstonelabs.contentcraft.ContentCraft;
  */
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ContentCraft.MOD_ID);
-
-    public static void init(IEventBus eventBus) {
-        eventBus.register(BLOCKS);
-    }
 }
