@@ -58,3 +58,5 @@ changelog.txt
 Thumbs.db
 *.stackdump
 gradle/wrapper/gradle-wrapper.properties
+/run/
+/src/generated/
