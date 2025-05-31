@@ -14,6 +14,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.glowstonelabs.contentcraft.ContentCraft;
+import xyz.glowstonelabs.contentcraft.block.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -45,19 +46,33 @@ public class ModBlockTagProvider extends BlockTagsProvider {
      */
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
+        // Blocks that should get the minecraft Logs tag
+        this.tag(BlockTags.LOGS);
+
         // Blocks that require a pickaxe to mine
-        this.tag(BlockTags.MINEABLE_WITH_PICKAXE);
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.XAENON_ORE.get())
+                .add(ModBlocks.XAENON_BLOCK.get())
+                .add(ModBlocks.RAW_XAENON_BLOCK.get())
+        ;
         // Blocks that require a shovel to mine
-        this.tag(BlockTags.MINEABLE_WITH_AXE);
+        this.tag(BlockTags.MINEABLE_WITH_AXE)
+        ;
         // Blocks that require a hoe to mine
         this.tag(BlockTags.MINEABLE_WITH_HOE);
+
         // Blocks that require a shovel to mine
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL);
+
         //Blocks that need tool tier stone+
         this.tag(BlockTags.NEEDS_STONE_TOOL);
+
         //Blocks that need tool tier iron+
         this.tag(BlockTags.NEEDS_IRON_TOOL);
+
         //Blocks that need tool tier diamond+
-        this.tag(BlockTags.NEEDS_DIAMOND_TOOL);
+        this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
+                .add(ModBlocks.XAENON_ORE.get())
+        ;
     }
 }

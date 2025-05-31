@@ -48,7 +48,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
      */
     @Override
     protected void generate() {
-
+        dropSelf(ModBlocks.XAENON_ORE.get());
+        dropSelf(ModBlocks.RAW_XAENON_BLOCK.get());
+        dropSelf(ModBlocks.XAENON_BLOCK.get());
     }
 
     /**
