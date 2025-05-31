@@ -4,10 +4,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import xyz.glowstonelabs.contentcraft.ContentCraft;
+import xyz.glowstonelabs.contentcraft.block.ModBlocks;
 
 public class ModCreativeModeTabs {
 
@@ -22,11 +23,17 @@ public class ModCreativeModeTabs {
     /** Creative tab for mod blocks */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BLOCKS_TAB = CREATIVE_MODE_TABS.register(
             "block_creative_tab",
-            () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.contentCraft.blocks"))
-                    .withTabsBefore(CreativeModeTabs.COMBAT)
-                    .icon(Items.DIAMOND_SWORD::getDefaultInstance)
-                    .displayItems((parameters, output) -> output.accept(Items.DIAMOND_SWORD)).build()
+            () -> {
+                return CreativeModeTab.builder()
+                        .title(Component.translatable("itemGroup.gl_content_craft.blocks"))
+                        .withTabsBefore(CreativeModeTabs.COMBAT)
+                        .icon(() -> new ItemStack(ModBlocks.XAENON_BLOCK.get().asItem()))
+                        .displayItems((parameters, output) -> {
+                            output.accept(ModBlocks.XAENON_ORE);
+                            output.accept(ModBlocks.RAW_XAENON_BLOCK);
+                            output.accept(ModBlocks.XAENON_BLOCK);}
+                        ).build();
+            }
     );
 
 }

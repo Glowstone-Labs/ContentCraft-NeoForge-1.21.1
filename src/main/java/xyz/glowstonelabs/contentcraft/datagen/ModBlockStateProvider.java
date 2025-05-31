@@ -12,6 +12,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import xyz.glowstonelabs.contentcraft.ContentCraft;
+import xyz.glowstonelabs.contentcraft.block.ModBlocks;
 
 /**
  * Provider class for generating block states and models for ContentCraft mod.
@@ -36,15 +37,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Register block states and models here
+        blockWithItem(ModBlocks.XAENON_ORE);
+        blockWithItem(ModBlocks.XAENON_BLOCK);
+        blockWithItem(ModBlocks.RAW_XAENON_BLOCK);
     }
 
     /**
      * Helper method to generate both block and item models for a block.
      *
-     * @param deferredBlock The block to generate models for
-     * @param name          The name of the block (used for model generation)
+     * @param deferredBlock The block to generate models for.
      */
-    protected void blockWithItem(DeferredBlock<Block> deferredBlock, String name) {
+    protected void blockWithItem(DeferredBlock<Block> deferredBlock) {
         // Generate a simple block model and corresponding item model using the cube all texture
         simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
     }
